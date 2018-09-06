@@ -1,0 +1,40 @@
+{
+  "name": "node-stream-kafka",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha -r test/testHelper 'test/unit/**/*.spec.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:spikepanx/node-stream-kafka.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^10.9.4",
+    "bluebird": "^3.5.1",
+    "config": "^2.0.1",
+    "mississippi": "^3.0.0",
+    "node-rdkafka": "^2.4.1",
+    "pino": "^5.4.0",
+    "pino-pretty": "^2.0.1"
+  },
+  "devDependencies": {
+    "uuid": "^3.3.2",
+    "@types/mocha": "^5.2.5",
+    "@types/sinon": "^5.0.2",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
+    "sinon": "^6.1.5"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "description": "NodeJS streaming clients (Consumer & Producer) for Apache Kafka."
+}
