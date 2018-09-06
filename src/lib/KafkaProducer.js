@@ -4,8 +4,8 @@ const { from, to, duplex } = require('mississippi');
 const logger = require('./logger');
 
 class KafkaProducer extends Producer {
-  constructor(options) {
-    const { opts, globalConfig, topicConfig = {} } = options;
+  constructor(options = {}) {
+    const { opts = {}, globalConfig = {}, topicConfig = {} } = options;
     const { name = 'KafkaProducer' } = opts;
     super(globalConfig, topicConfig);
 
@@ -39,6 +39,12 @@ class KafkaProducer extends Producer {
     });
   }
 
+  /**
+   * @description
+   * @param {*} [options={ highWaterMark: 4 }]
+   * @returns {NodeJS.ReadableStream}
+   * @memberof KafkaProducer
+   */
   deliveryreportReadable(options = { highWaterMark: 4 }) {
     const opts = { ...options, objectMode: true }; // enforce ObjectMode
 
@@ -60,6 +66,12 @@ class KafkaProducer extends Producer {
     return this.readable;
   }
 
+  /**
+   * @description
+   * @param {*} [options={ highWaterMark: 4 }]
+   * @returns {NodeJS.WritableStream}
+   * @memberof KafkaProducer
+   */
   produceWritable(options = { highWaterMark: 4 }) {
     const opts = { ...options, objectMode: true }; // enforce ObjectMode
 
@@ -90,7 +102,7 @@ class KafkaProducer extends Producer {
             return setTimeout(pusher, 500);
           }
           this.logger.error(err);
-          return cb(err, null);
+          return cb(err);
         }
 
         return setImmediate(() => cb());
@@ -103,7 +115,7 @@ class KafkaProducer extends Producer {
         this.logger.info('Kafka Consumer flushed');
         if (err) {
           this.logger.error(err);
-          return cb(err, data);
+          return cb(err);
         }
 
         return setTimeout(() => {
@@ -114,6 +126,7 @@ class KafkaProducer extends Producer {
       });
     });
 
+    // @ts-ignore
     this.writable.on('finish', () => {
       this.logger.info('Stop fetching delivery reports ...');
       this.deliveryreports.push(null);
@@ -139,6 +152,7 @@ class KafkaProducer extends Producer {
 
     if (this.duplexStream) return this.duplexStream;
 
+    // @ts-ignore
     this.duplexStream = duplex(this.produceWritable(), this.deliveryreportReadable(), opts);
 
     return this.duplexStream;

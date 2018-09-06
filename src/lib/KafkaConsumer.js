@@ -4,12 +4,11 @@ const { from, to, duplex } = require('mississippi');
 // const uuid = require('uuid').v4;
 const logger = require('./logger');
 
-function noop(cb) { return cb(); }
-
 class KafkaConsumer extends Consumer {
-  constructor(options) {
-    const { opts, globalConfig, topicConfig = {} } = options;
+  constructor(options = {}) {
+    const { opts = {}, globalConfig = {}, topicConfig = {} } = options;
     const { name = 'KafkaConsumer' } = opts;
+
     super(globalConfig, topicConfig);
 
     this.logger = logger.getLogger(name);
@@ -26,6 +25,15 @@ class KafkaConsumer extends Consumer {
     this.stopReading = false;
   }
 
+  /**
+   * @description Provides a stream consumer
+   * @param {object=} options stream options
+   // @ts-ignore
+   * @param {number=} options.highWaterMark The maximum number of messages to store in the internal
+   * buffer before ceasing to read from the topic(s)
+   * @returns {NodeJS.ReadableStream} message stream
+   * @memberof KafkaConsumer
+   */
   consumeReadable(options = { highWaterMark: 4 }) {
     const opts = { ...options, objectMode: true }; // enforce ObjectMode
 
@@ -65,11 +73,14 @@ class KafkaConsumer extends Consumer {
 
   /**
    * @description commit writeable stream
-   * @param {object=} options
-   * @returns {Writable} Writeable for commits
+   * @param {object=} options stream options
+   // @ts-ignore
+   * @param {number=} options.highWaterMark The maximum number of commits to store in the internal
+   * buffer before ceasing to write to the broker(s)
+   * @returns {NodeJS.WritableStream} Writeable for commits
    * @memberof KafkaConsumer
    */
-  commitWritable(options = { highWaterMark: 4 }, flushCb = noop) {
+  commitWritable(options = { highWaterMark: 4 }) {
     const opts = { ...options, objectMode: true }; // enforce ObjectMode
 
     if (this.writable) return this.writable;
@@ -91,7 +102,7 @@ class KafkaConsumer extends Consumer {
       this.logger.trace('flush writable');
 
       // @ts-ignore
-      return setImmediate(() => flushCb(cb));
+      return setImmediate(() => cb());
     });
 
     return this.writable;
@@ -106,6 +117,7 @@ class KafkaConsumer extends Consumer {
 
     if (this.duplexStream) return this.duplexStream;
 
+    // @ts-ignore
     this.duplexStream = duplex(this.commitWritable(), this.consumeReadable(), opts);
 
     return this.duplexStream;

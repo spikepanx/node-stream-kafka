@@ -1,4 +1,4 @@
 const KafkaConsumer = require('./lib/KafkaConsumer');
-const Kafkaproducer = require('./lib/KafkaProducer');
+const KafkaProducer = require('./lib/KafkaProducer');
 
-module.exports = { KafkaConsumer, Kafkaproducer };
+module.exports = { KafkaConsumer, KafkaProducer };
