@@ -10,8 +10,8 @@
     "url": "git@github.com:spikepanx/node-stream-kafka.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Michael Heinecke <root.heinecke@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@types/node": "^10.9.4",
     "bluebird": "^3.5.1",
