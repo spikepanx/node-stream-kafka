@@ -51,9 +51,8 @@ class KafkaProducer extends Producer {
     if (this.readable) return this.readable;
 
     this.readable = from(opts, (size, next) => {
-      if (this.stopReading) return next(null, null);
-
       const fetcher = () => {
+        if (this.stopReading) this.deliveryreports.push(null);
         if (this.deliveryreports.length) {
           return setImmediate(() => next(null, this.deliveryreports.shift()));
         }

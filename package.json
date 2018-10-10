@@ -1,6 +1,6 @@
 {
   "name": "node-stream-kafka",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha -r test/testHelper 'test/unit/**/*.spec.js'"
