@@ -13,25 +13,25 @@
   "author": "Michael Heinecke <root.heinecke@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^10.9.4",
-    "bluebird": "^3.5.1",
-    "config": "^2.0.1",
+    "@types/node": "^10.12.23",
+    "bluebird": "^3.5.3",
+    "config": "^2.0.2",
     "mississippi": "^3.0.0",
-    "node-rdkafka": "^2.4.1",
-    "pino": "^5.4.0",
-    "pino-pretty": "^2.0.1"
+    "node-rdkafka": "^2.5.1",
+    "pino": "^5.11.1",
+    "pino-pretty": "^2.5.0"
   },
   "devDependencies": {
-    "uuid": "^3.3.2",
     "@types/mocha": "^5.2.5",
-    "@types/sinon": "^5.0.2",
-    "chai": "^4.1.2",
+    "@types/sinon": "^5.0.7",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^5.4.0",
+    "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-import": "^2.16.0",
     "mocha": "^5.2.0",
-    "sinon": "^6.1.5"
+    "sinon": "^6.3.5",
+    "uuid": "^3.3.2"
   },
   "directories": {
     "test": "test"

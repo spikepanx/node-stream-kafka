@@ -12,26 +12,13 @@ class KafkaProducer extends Producer {
     this.logger = logger.getLogger(name);
     this.deliveryreports = [];
     this.stopReading = false;
-    this._stats = {
-      produce: {
-        total: 0,
-        queueFull: 0,
-        errors: 0,
-      },
-      delivery: {
-        total: 0,
-        errors: 0,
-      },
-    };
 
     this.on('delivery-report', (err, report) => {
       if (err) {
-        this._stats.delivery.errors += 1;
         return this.logger.error(err);
       }
       const { topic, partition, offset, opaque } = report;
 
-      this._stats.delivery.total += 1;
       this.logger.trace({ topic, partition, offset, opaque }, 'delivery report');
 
       if (report) return this.deliveryreports.push(report);
